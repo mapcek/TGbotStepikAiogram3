@@ -1,1 +1,1 @@
-Trying create bots with aiogram 3 library
+Trying create bots with aiogram3 library

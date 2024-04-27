@@ -12,9 +12,6 @@ chat_id: int
 
 
 while counter < MAX_COUNTER:
-
-    print('attempt =', counter)
-    #  чтоб видеть в консоли что код жив
     updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}').json()
     #  запрашиваем апдейт от сервера
 
@@ -23,10 +20,8 @@ while counter < MAX_COUNTER:
         for result in updates['result']:
             offset = result['update_id']
             chat_id = result['message']['from']['id']
-            image_response = requests.get('https://random.dog/woof.json').json()
-            image = image_response['url']
-            requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo={image}')
+            print(result)
 
-    time.sleep(1)
+    time.sleep(5)
     counter += 1
     
