@@ -12,11 +12,13 @@ chat_id: int
 
 
 while counter < MAX_COUNTER:
-    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}').json()
+    updates = requests.get(
+        f'{API_URL}{BOT_TOKEN}'
+        f'/getUpdates?offset={offset + 1}').json()
     #  запрашиваем апдейт от сервера
 
     if updates['result']:
-    #  если апдейт пришел, то парсим его на информацию
+        #  если апдейт пришел, то парсим его на информацию
         for result in updates['result']:
             offset = result['update_id']
             chat_id = result['message']['from']['id']
@@ -24,4 +26,3 @@ while counter < MAX_COUNTER:
 
     time.sleep(5)
     counter += 1
-    

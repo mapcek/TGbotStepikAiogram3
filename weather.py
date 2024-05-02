@@ -4,7 +4,6 @@ import requests
 import json
 
 import tg_token as tok
-#from coordinates import _get_coordinates
 
 
 Celsius = float
@@ -53,15 +52,33 @@ class WeatherType(Enum):
     MODERATE_OR_HEAVY_RAIN_SHOWER = 'Умеренный или сильный ливень'
     TORRENTIAL_RAIN_SHOWER = 'Сильные ливни'
     LIGHT_SLEET_SHOWERS = 'Небольшой ливневый дождь со снегом'
-    MODERATE_OR_HEAVY_SLEET_SHOWERS = 'Умеренные или сильные ливневые дожди со снегом'
+    MODERATE_OR_HEAVY_SLEET_SHOWERS = (
+                            'Умеренные или сильные '
+                            'ливневые дожди со снегом'
+                            )
     LIGHT_SNOW_SHOWERS = 'Небольшой снег'
     MODERATE_OR_HEAVY_SNOW_SHOWERS = 'Умеренный или сильный снег'
     LIGHT_SHOWERS_OF_ICE_PELLETS = 'Небольшой ледяной дождь'
-    MODERATE_OR_HEAVY_SHOWERS_OF_ICE_PELLETS = 'Умеренный или сильный ледяной дождь'
-    PATCHY_LIGHT_RAIN_WITH_THUNDER = 'В отдельных районах местами небольшой дождь с грозой'
-    MODERATE_OR_HEAVY_RAIN_WITH_THUNDER = 'В отдельных районах умеренный или сильный дождь с грозой'
-    PATCHY_LIGHT_SNOW_WITH_THUNDER = 'В отдельных районах местами небольшой снег с грозой'
-    MODERATE_OR_HEAVY_SNOW_WITH_THUNDER = 'В отдельных районах умеренный или сильный снег с грозой'
+    MODERATE_OR_HEAVY_SHOWERS_OF_ICE_PELLETS = (
+                            'Умеренный или сильный '
+                            'ледяной дождь'
+                            )
+    PATCHY_LIGHT_RAIN_WITH_THUNDER = (
+                            'В отдельных районах местами '
+                            'небольшой дождь с грозой'
+                            )
+    MODERATE_OR_HEAVY_RAIN_WITH_THUNDER = (
+                            'В отдельных районах умеренный '
+                            'или сильный дождь с грозой'
+                            )
+    PATCHY_LIGHT_SNOW_WITH_THUNDER = (
+                            'В отдельных районах '
+                            'местами небольшой снег с грозой'
+                            )
+    MODERATE_OR_HEAVY_SNOW_WITH_THUNDER = (
+                            'В отдельных районах умеренный '
+                            'или сильный снег с грозой'
+                            )
 
 
 class WindDirection(Enum):
@@ -82,7 +99,7 @@ class WindDirection(Enum):
     NW = 'Северо-западный'
     NNW = 'Северо-западный'
 
-    
+
 class Weather(NamedTuple):
     city: City
     temp: Celsius
@@ -199,11 +216,11 @@ def _parse_wind_dir(weather: json) -> WindDirection:
 
 def _parse_weather(weather: json) -> Weather:
     return Weather(
-        city = City(weather['location']['name']),
-        temp = Celsius(weather['current']['temp_c']),
-        feels_temp = Celsius(weather['current']['feelslike_c']),
-        weather_type = _parse_weather_type(weather).value,
-        icon = f'http:{weather['current']['condition']['icon']}',
-        wind_dir =  _parse_wind_dir(weather).value,
-        wind_mps = int(Wind_mps(weather['current']['wind_kph'] / 3.6))
+        city=City(weather['location']['name']),
+        temp=Celsius(weather['current']['temp_c']),
+        feels_temp=Celsius(weather['current']['feelslike_c']),
+        weather_type=_parse_weather_type(weather).value,
+        icon=f'http:{weather['current']['condition']['icon']}',
+        wind_dir=_parse_wind_dir(weather).value,
+        wind_mps=int(Wind_mps(weather['current']['wind_kph'] / 3.6))
         )

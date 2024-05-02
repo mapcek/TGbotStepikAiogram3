@@ -19,11 +19,13 @@ dp = Dispatcher()
 ATTEMPTS = 5
 
 #  данные о текущем пользователе
-user_data = {'in_game': False,
-            'secret_number': None,
-            'attempts': None,
-            'total_games': 0,
-            'wins': 0}
+user_data = {
+    'in_game': False,
+    'secret_number': None,
+    'attempts': None,
+    'total_games': 0,
+    'wins': 0
+    }
 
 
 #  генерация случайного числа для игры
@@ -104,7 +106,7 @@ async def pos_answer(message: Message):
 # Этот хэндлер будет срабатывать на отказ пользователя сыграть в игру
 @dp.message(F.text.lower().in_(['нет', 'не', 'не хочу', 'не буду']))
 async def process_negative_answer(message: Message):
-    if not user['in_game']:
+    if not user_data['in_game']:
         await message.answer(
             'Жаль :(\n\nЕсли захотите поиграть - просто '
             'напишите об этом'
@@ -131,11 +133,17 @@ async def number_answer(message: Message):
         elif int(message.text) > user_data['secret_number']:
             user_data['attempts'] -= 1
             await message.answer('Мое число меньше')
-            await message.answer(f'У вас осталось {user_data['attempts']} попыток')
+            await message.answer(
+                f'У вас осталось '
+                f'{user_data['attempts']} попыток'
+                )
         elif int(message.text) < user_data['secret_number']:
             user_data['attempts'] -= 1
             await message.answer('Мое число больше')
-            await message.answer(f'У вас осталось {user_data['attempts']} попыток')
+            await message.answer(
+                f'У вас осталось '
+                f'{user_data['attempts']} попыток'
+                )
         if user_data['attempts'] == 0:
             user_data['in_game'] = False
             user_data['total_games'] += 1
